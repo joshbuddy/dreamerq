@@ -1,0 +1,5 @@
+[ ] queue stats
+[ ] peeking
+[ ] delayed put
+[ ] master queue (place where every message goes)
+[ ] filtering at the permission level

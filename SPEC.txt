@@ -1,0 +1,136 @@
+Spec
+
+returns feeds one line at a time
+  -> GET f
+
+  <- 200 OK
+  <- count [number]
+  <- [name]                    
+
+returns queues one line at a time
+  -> GET q
+
+  <- 200 OK
+  <- count [number]
+  <- [name]                    
+
+creates feed
+  -> POST f/name
+
+  <- 200 OK
+  or
+  <- 409 FEED EXISTS
+
+creates queue
+  -> POST q/name
+
+  <- 200 OK
+  or 
+  <- 409 QUEUE EXISTS
+
+get state of queue
+  -> INFO q/name
+
+  <- 200 OK
+  [json string]
+  or 
+  <- 404 QUEUE NOT FOUND
+
+get state of feed
+  -> INFO f/name
+
+  <- 200 OK
+  [json string]
+  or 
+  <- 404 QUEUE NOT FOUND
+
+
+puts message
+  -> PUT f/name
+  -> HEADER name value            (zero or more)
+  -> BODY [body size int]
+  -> [int bytes]
+
+  <- 200 OK
+  or
+  <- 406 HEADERS MALFORMED
+
+streams feed - send messages as they become available
+  -> STREAM f/name
+
+  <- 200 OK
+  or
+  <- 404 FEED NOT FOUND
+
+stops the feed stream - stops sending messages
+  -> STOP f/name
+
+  <- 200 OK
+  or
+  <- 404 FEED NOT STREAMED
+
+streams feed - send messages as they become available
+  -> STREAM q/name
+
+  <- 200 OK
+  or
+  <- 404 FEED NOT FOUND
+
+stops the feed stream - stops sending messages
+  -> STOP q/name
+
+  <- 200 OK
+  or
+  <- 404 FEED NOT STREAMED
+  or
+  <- 404 FEED NOT FOUND
+  or
+  <- 404 QUEUE NOT FOUND
+
+bind feed to queue
+  -> BIND f/name q/name
+
+  <- 200 OK
+  or
+  <- 404 FEED NOT FOUND
+  or
+  <- 404 QUEUE NOT FOUND
+
+pop a message
+  -> GET q/name
+
+  <- 200 OK
+  [message]
+  or
+  <- 404 NO MESSAGE
+  or
+  <- 404 QUEUE NOT FOUND
+  
+peeks a message
+  -> PEEK q/name
+
+  <- 200 OK
+  [message]
+  or
+  <- 404 NO MESSAGE
+  or
+  <- 404 QUEUE NOT FOUND
+  
+blocking pop a message
+  -> SELECT q/name
+
+  <- 200 OK
+  [message]
+  or
+  <- 404 NO MESSAGE
+  or
+  <- 404 QUEUE NOT FOUND
+
+message format
+  MESSAGE f/name [q/name]
+  HEADER name value
+  BODY size
+  xxxxx
+  
+
+

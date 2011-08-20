@@ -1,0 +1,4 @@
+#!/usr/bin/env node
+
+var dreamerq = require(__dirname + '/../lib/dreamer');
+new dreamerq.DreamerQ.Runner();

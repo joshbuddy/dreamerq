@@ -1,0 +1,38 @@
+# encoding: utf-8
+
+require 'spec'
+require 'spec/rake/spectask'
+require 'yard'
+
+YARD::Rake::YardocTask.new do |t|
+  t.files   = ['lib/**/*.rb']   # optional
+  t.options = ['--markup=markdown'] # optional
+end
+
+Spec::Rake::SpecTask.new do |t|
+  t.spec_opts ||= []
+  t.spec_opts << "-rubygems"
+  t.spec_opts << "--options" << "spec/spec.opts"
+  t.spec_files = FileList['spec/**/*_spec.rb']
+end
+
+desc "Run all examples with RCov"
+Spec::Rake::SpecTask.new('spec_with_rcov') do |t|
+  t.spec_files = FileList['spec/**/*.rb']
+  t.rcov = true
+  t.rcov_opts = ['--exclude', 'spec']
+end
+
+require 'rake/rdoctask'
+desc "Generate documentation"
+Rake::RDocTask.new do |rd|
+  rd.main = "README.rdoc"
+  rd.rdoc_files.include("README.rdoc", "lib/**/*.rb")
+  rd.rdoc_dir = 'rdoc'
+end
+
+begin
+  require 'code_stats'
+  CodeStats::Tasks.new
+rescue LoadError
+end

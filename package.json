@@ -1,0 +1,21 @@
+{
+    "name" : "dreamerq",
+    "version" : "0.0.1",
+    "description" : "Dreaming about queues",
+    "repositories" : [
+       {
+           "type" : "git",
+           "url" : "http://github.com/joshbuddy/dreamerq.git" 
+       } 
+    ],
+    "dependencies": {
+      "log4js": "0.3.8",
+      "daemon": "0.1.0"
+    },
+    "devDependencies": {
+      "vows": "*"
+    },
+    "engines" : {
+       "node" : ">=0.4.0"
+    }
+}
